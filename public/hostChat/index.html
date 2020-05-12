@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chat</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Style dành cho chatbot -->
+	<style>
+			body {font-family: Arial, Helvetica, sans-serif;}
+			* 	 {box-sizing: border-box;}
+
+			/* Button used to open the chat form - fixed at the bottom of the page */
+			.open-button {
+			  background-color: #6495ED;
+			  color: white;
+			  padding: 16px 20px;
+			  border: none;
+			  cursor: pointer;
+			  opacity: 0.8;
+			  position: fixed;
+			  bottom: 50px;
+			  right: 18px;
+			  width: 70px;
+			  height: 70px;
+			  border-radius: 60%;
+			}
+
+			/* The popup chat - hidden by default */
+			.chat-popup {
+			  display: none;
+			  position: fixed;
+			  bottom: 0;
+			  right: 15px;
+			  border: 3px solid #f1f1f1;
+			  z-index: 9;
+			  margin-bottom: 5px;
+			  border-radius: 5px;
+			}
+
+			/* Add styles to the form container */
+			.form-container {
+			  width: 380px;
+			  height: 500px;
+			  padding: 10px;
+			  background-color: white;
+			  border-radius: 5px;
+			}
+
+			/* Set a style for the submit/send button */
+			.form-container .btn {
+			  background-color: #4CAF50;
+			  color: white;
+			  padding: 10px 20px;
+			  border: none;
+			  cursor: pointer;
+			  width: 49%;
+			  margin-bottom: 10px;
+			  opacity: 0.8;
+			}
+
+			/* Add a red background color to the cancel button */
+			.form-container .cancel {
+			  background-color: red;
+			}
+
+			/* Add some hover effects to buttons */
+			.form-container .btn:hover, .open-button:hover {
+			  opacity: 1;
+			}
+
+			/* Full-width textarea */
+			.form-container input {
+			  width: 100%;
+			  padding: 15px;
+			  margin: 0 0 5px 0;
+			  border: none;
+			  background: #f1f1f1;
+			  resize: none;
+			  min-height: 30px;
+			}
+
+			/* When the textarea gets focus, do something */
+			.form-container input:focus {
+			  background-color: #ddd;
+			  outline: none;
+			}
+
+			/* style dành cho chat message*/
+				.ctn {
+				  border: 2px solid #dedede;
+				  background-color: #f1f1f1;
+				  border-radius: 5px;
+				  padding: 5px;
+				  margin: 5px;
+				  width: 80%;
+				  max-width: 80%;
+				  word-wrap: break-word;
+   				  word-break: break-word;
+				}
+
+				.darker {
+				  border-color: #ccc;
+				  background-color: lightblue;
+				  float: right;
+				  margin-left: 10px;
+				  margin-right:5px;
+				}
+
+				.ctn::after {
+				  content: "";
+				  clear: both;
+				  display: table;
+				}
+
+				.ctn img {
+				  float: left;
+				  max-width: 30px;
+				  width: 30%;
+				  margin-right: 20px;
+				  border-radius: 50%;
+				}
+
+				.ctn img.right {
+				  float: right;
+				  margin-left: 10px;
+				  margin-right:0;
+				}
+
+				.time-right1 {
+				  float: right;
+				  color: #aaa;
+				}
+
+				.time-left1 {
+				  float: left;
+				  color: #999;
+				}
+			</style>
+	<!-- End style dành cho chatbot-->
+</head>
+<body>
+
+	<!-- Chat Messages-->
+	<div class="chat-popup" id="myForm">
+	  <form action="" class="form-container">
+	    <h3 style="color: #0000FF;">Chat Messages</h3>
+	    <br>	    
+	    <div id="boxChat" style="border: 3px solid #DCDCDC; border-radius: 5px; height: 300px; overflow-y: scroll">
+	    	<div class="ctn">
+  				<img src="https://www.w3schools.com/w3images/bandmember.jpg" alt="Avatar">
+  				<p>Xin chào! Tôi có thể giúp gì cho bạn?</p>
+ 				<span class="time-right1">11:00</span>
+			</div>
+
+	    </div>
+	    <br>
+	    <!--<textarea placeholder="Type message.." name="msg" id="mess" required></textarea>-->
+	    <div><input type="text" id="mess" name="msg" placeholder="Type message.."></div>
+	    <span style="display: inline;">
+	    	<button type="submit" id="btnSend" class="btn">Send</button>
+	    	<button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+		</span>
+	  </form>
+	</div>
+
+	<!-- Script dành cho chatbot -->
+	<button class="open-button" id="iconChat" onclick="openForm()">Chat</button>
+
+	<script>
+		function openForm() {
+		  document.getElementById("myForm").style.display = "block";
+		}
+
+		function closeForm() {
+		  document.getElementById("myForm").style.display = "none";
+		}
+	</script>
+
+	<!--Import thu vien Socketio -->
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+	<!-- Import thu vien  javaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+	<!--Script xu ly su kien -->
+	<script type="text/javascript">
+		$('#iconChat').on('click', function(){
+
+			var socket = io.connect('http://localhost:1000')
+			
+			socket.on('connect', function(mess) {
+				console.log('User connected!');
+			});
+
+			/*Gui mess*/
+			$('#btnSend').on('click', function(e){
+				e.preventDefault()
+				socket.send($('#mess').val());
+				var message = "<div class='ctn darker' style='display:inline-block'>"
+			              +"<img src='https://www.w3schools.com//w3images/avatar_g2.jpg' alt='Avatar' class='right'>"
+			  			  +"<p>"+$('#mess').val()+"</p>"
+			  			  +"<span class='time-left1'>11:01</span>"
+						  +"</div>";
+				$('#boxChat').append(message);
+				$('#mess').val('');
+			});
+
+			//Nhan mess
+
+			socket.on('message', function(msg){
+				var message = "<div class='ctn' style='display:inline-block'>"
+  				+"<img src='https://www.w3schools.com/w3images/bandmember.jpg' alt='Avatar'>"
+  				+"<p>"+msg+"</p>"
+ 				+"<span class='time-right1'>11:00</span>"
+				+"</div>";
+				$('#boxChat').append(message);
+			});
+
+		} );
+
+	</script>
+
+
+	<!-- EndsCript dành cho chatbot -->
+
+
+
+
+</body>
+</html>
