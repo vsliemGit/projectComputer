@@ -60,6 +60,7 @@ class FrontendController extends Controller
         $tuKhoa = $request->tuKhoa;
         $result = DB::table('SanPham')
             ->leftJoin('ChiTietSanPham', 'SanPham.sp_ma', '=', 'ChiTietSanPham.sp_ma')
+            ->select('SanPham.sp_ma','SanPham.sp_hinh', 'SanPham.sp_ten', 'SanPham.sp_giaBan', 'ChiTietSanPham.ctsp_hang')
             ->where('SanPham.sp_ten', 'like', "%{$tuKhoa}%")
             ->orWhere('SanPham.sp_thongTin', 'like', "%{$tuKhoa}%")
             ->orWhere('ChiTietSanPham.ctsp_hang', 'like', "%{$tuKhoa}%")

@@ -33,13 +33,13 @@
                                     <% item.getName() %>
                                 </td>
                                 <td class="column-3">
-                                    <% item.getPrice() | currency %>
+                                    <% item.getPrice() | currency : '$' : 0 %>
                                 </td>
                                 <td class="column-4">
                                     <% item.getQuantity() | number %>
                                 </td>
                                 <td class="column-5">
-                                    <% item.getTotal() | currency %>
+                                    <% item.getTotal() | currency : '$' : 0 %>
                                 </td>
                                 <td><span ng-click="ngCart.removeItemById(item.getId())" class="glyphicon glyphicon-remove remove">Xóa</span></td>
                             </tr>
@@ -64,7 +64,7 @@
 
                         <div class="size-209 p-t-1" ng-show="ngCart.getTax()">
                             <span class="mtext-110 cl2">
-                                <% ngCart.getTax() | currency %>
+                                <% ngCart.getTax() | currency : '$' : 0 %>
                             </span>
                         </div>
 
@@ -77,7 +77,7 @@
 
                         <div class="size-209 p-t-1" ng-show="ngCart.getShipping()">
                             <span class="mtext-110 cl2">
-                                <% ngCart.getShipping() | currency %>
+                                <% ngCart.getShipping() | currency : '$' : 0 %>
                             </span>
                         </div>
 
@@ -90,7 +90,7 @@
 
                         <div class="size-209 p-t-1">
                             <span class="mtext-110 cl2">
-                                <% ngCart.totalCost() | currency %>
+                                <% ngCart.totalCost() | currency : '$' : 0 %>
                             </span>
                         </div>
                     </div>

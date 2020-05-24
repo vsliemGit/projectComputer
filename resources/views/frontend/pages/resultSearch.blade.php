@@ -38,11 +38,13 @@ LATOP - Kết quả tìm kiếm
 						<div class="block2-txt flex-w flex-t p-t-14">
 							<div class="block2-txt-child1 flex-col-l ">
 								<a href="{{ route('frontend.productDetail', ['id' => $sp->sp_ma]) }}" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-									Tên: {{ $sp->sp_ten }}
+									Tên: <span style="color: blue;"> {{ $sp->sp_ten }} </span>
 								</a>
 
 								<span class="stext-105 cl3">
-									Giá: {{ $sp->sp_giaBan }}.000 vnđ
+									Giá: &nbsp <div style="color: red; float:right" >
+												<% 	{{ $sp->sp_giaBan }} | currency : '$' : 0 %>
+												</div>
                                 </span>
                                 
                                 <span class="stext-105 cl3">
