@@ -55,6 +55,10 @@ Route::group(['middleware' => ['adminLogin']], function ()
     Route::get('/admin/donhang_index', 'BackendController@showDonHang')->name('donhang.index');
     Route::get('/admin/donhang_pdf', 'BackendController@donhangPdf')->name('donhang.pdf');
     Route::get('/admin/donhang_print', 'BackendController@donhangPrint')->name('donhang.print');
+
+    // Tạo route Báo cáo Đơn hàng
+    Route::get('/admin/baocao/donhang', 'BaoCaoController@donhang')->name('backend.baocao.donhang');
+    Route::get('/admin/baocao/donhang/data', 'BaoCaoController@donhangData')->name('baocao.donhang.data');
 });
 
 

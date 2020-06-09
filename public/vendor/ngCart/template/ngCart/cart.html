@@ -29,19 +29,12 @@
                                         <img src="<% item.getData().sp_hinh_url %>" alt="IMG">
                                     </div>
                                 </td>
-                                <td class="column-2">
-                                    <% item.getName() %>
-                                </td>
-                                <td class="column-3">
-                                    <% item.getPrice() | currency : '$' : 0 %>
-                                </td>
-                                <td class="column-4">
-                                    <% item.getQuantity() | number %>
-                                </td>
-                                <td class="column-5">
-                                    <% item.getTotal() | currency : '$' : 0 %>
-                                </td>
-                                <td><span ng-click="ngCart.removeItemById(item.getId())" class="glyphicon glyphicon-remove remove">Xóa</span></td>
+                                <td class="column-2"><% item.getName() %></td>
+                                <td class="column-3"><% item.getPrice() | currency %></td>
+                                <td class="column-4"><% item.getQuantity() | number %></td>
+                                <td class="column-5"><% item.getTotal() | currency %> </td>
+                                <td><span ng-click="ngCart.removeItemById(item.getId())"
+                                        class="glyphicon glyphicon-remove remove">Xóa</span></td>
                             </tr>
                         </table>
                     </div>
@@ -58,13 +51,13 @@
                         <!-- Thuế -->
                         <div class="size-208" ng-show="ngCart.getTax()">
                             <span class="mtext-101 cl2">
-                                Thuế (<% ngCart.getTaxRate() %> %):
+                                Thuế (<% ngCart.getTaxRate() %>%):
                             </span>
                         </div>
 
                         <div class="size-209 p-t-1" ng-show="ngCart.getTax()">
                             <span class="mtext-110 cl2">
-                                <% ngCart.getTax() | currency : '$' : 0 %>
+                                <% ngCart.getTax() | currency %>
                             </span>
                         </div>
 
@@ -77,7 +70,7 @@
 
                         <div class="size-209 p-t-1" ng-show="ngCart.getShipping()">
                             <span class="mtext-110 cl2">
-                                <% ngCart.getShipping() | currency : '$' : 0 %>
+                                <% ngCart.getShipping() | currency %>
                             </span>
                         </div>
 
@@ -90,10 +83,14 @@
 
                         <div class="size-209 p-t-1">
                             <span class="mtext-110 cl2">
-                                <% ngCart.totalCost() | currency : '$' : 0 %>
+                                <% ngCart.totalCost() | currency %>
                             </span>
                         </div>
                     </div>
+
+                    <button class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                        Thanh toán
+                    </button>
                 </div>
             </div>
         </div>
@@ -104,16 +101,16 @@
     .ngCart.cart span[ng-click] {
         cursor: pointer;
     }
-    
+
     .ngCart.cart .glyphicon.disabled {
         color: #aaa;
     }
-    
+
     .ngCart.cart .title {
         color: blue;
         font-weight: bold;
     }
-    
+
     .ngCart.cart .remove {
         color: red;
     }

@@ -159,5 +159,6 @@
 <script src="{{ asset('theme/adminlte/js/adminlte.min.js') }}"></script>
      <!-- Các custom script dành riêng cho từng view -->
      @yield('custom-scripts')
+     
 </body>
 </html>
