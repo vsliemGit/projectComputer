@@ -10,7 +10,7 @@ import tensorflow
 import random
 import json
 
-with open('intents.json', 'r', encoding='utf8') as file:
+with open('data.json', 'r', encoding='utf8') as file:
     data = json.load(file)
     
 words = []
@@ -102,7 +102,7 @@ def chat():
         results = model.predict([bag_of_words(inp, words)])
         results_index = numpy.argmax(results)
         tag = labels[results_index]
-
+        
         for tg in data["intents"]:
             if tg['tag'] == tag:
                 responses = tg['responses']

@@ -16,7 +16,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "dfjahdfo23434cvas"
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-with open('intents.json', 'r', encoding='utf8') as file:
+with open('data.json', 'r', encoding='utf8') as file:
     data = json.load(file)
     
 with open("data.pickle", "rb") as f:
