@@ -18,7 +18,7 @@ labels = []
 docs_x = []
 docs_y = []
 
-ignore_words = ['?', 'và', 'à', 'ừ', 'ạ', 'vì', 'từng', 'một_cách']
+ignore_words = ['?','.', 'và', 'à', 'ừ', 'ạ', 'vì', 'từng', 'một_cách']
 
 for intent in data["intents"]:
     for pattern in intent["patterns"]:
@@ -35,6 +35,8 @@ words = [w.lower() for w in words if w not in ignore_words]
 words = sorted(list(set(words)))
 
 labels = sorted(labels)
+
+print(words)
 
 training = []
 output = []
@@ -63,6 +65,7 @@ training = numpy.array(training)
 output = numpy.array(output)
 with open("data.pickle", "wb") as f:
         pickle.dump((words, labels, training, output), f)
+
 
 tensorflow.reset_default_graph()
 
@@ -109,4 +112,4 @@ def chat():
 
         print(random.choice(responses))
 
-print('Installing host chatbot!')
+#print('Installing host chatbot!')

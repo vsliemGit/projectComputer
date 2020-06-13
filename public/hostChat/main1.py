@@ -48,14 +48,18 @@ def bag_of_words(s, words):
     return numpy.array(bag)
 
 def response(msg):
-    results = model.predict([bag_of_words(msg, words)])
+    results = model.predict([bag_of_words(msg, words)])[0]
     results_index = numpy.argmax(results)
     tag = labels[results_index]
 
-    for tg in data["intents"]:
-            if tg['tag'] == tag:
-                responses = tg['responses']
-    return random.choice(responses)
+    if results[results_index] > 0.6:
+        for tg in data["intents"]:
+            if tg["tag"] == tag:
+                response = tg["responses"]
+                
+        return random.choice(response)
+    else:
+        return "Tôi không hiểu. Cảm phiền bạn nói lại nhé...."
 
 @socketio.on('connect')
 def connect():
